@@ -44,5 +44,17 @@ class ApiService implements Filter, Pagination, Sort
         $this->applyFilteredFieldsToQueryBuilder($queryBuilder);
         $this->applySortedFieldsToQueryBuilder($queryBuilder);
         $this->applyPaginationToQueryBuilder($queryBuilder);
+
+        $this->addHeaderInformation();
+    }
+
+    /**
+     * Adds all information in response header
+     */
+    public function addHeaderInformation()
+    {
+        if ($this->getPaginationTotal() !== null) {
+            $this->headerInformation->add('pagination-total', $this->getPaginationTotal());
+        }
     }
 }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Shopping\ApiTKUrlBundle\Service;
 
 use Doctrine\ORM\QueryBuilder;
-use Shopping\ApiHelperBundle\Service\HeaderInformation;
 use Shopping\ApiTKUrlBundle\Exception\PaginationException;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Shopping\ApiTKUrlBundle\Annotation as Api;
@@ -22,11 +21,6 @@ trait PaginationTrait
      * @var RequestStack
      */
     private $requestStack;
-
-    /**
-     * @var HeaderInformation
-     */
-    private $headerInformation;
 
     /**
      * @var Api\Pagination
@@ -146,8 +140,6 @@ trait PaginationTrait
     public function setPaginationTotal(int $paginationTotal): void
     {
         $this->paginationTotal = $paginationTotal;
-
-        $this->headerInformation->add('pagination-total', $this->paginationTotal);
     }
 
     /**
