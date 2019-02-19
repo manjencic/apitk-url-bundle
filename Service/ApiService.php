@@ -42,7 +42,8 @@ class ApiService implements Filter, Pagination, Sort
     public function applyToQueryBuilder(QueryBuilder $queryBuilder): void
     {
         $this->applyFilteredFieldsToQueryBuilder($queryBuilder);
-        $this->applyPaginationToQueryBuilder($queryBuilder);
+        $this->applyPaginationTotal($queryBuilder);
         $this->applySortedFieldsToQueryBuilder($queryBuilder);
+        $this->applyPaginationToQueryBuilder($queryBuilder);
     }
 }

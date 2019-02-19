@@ -63,9 +63,23 @@ trait PaginationTrait
      *
      * @param QueryBuilder $queryBuilder
      * @throws PaginationException
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function applyPaginationToQueryBuilder(QueryBuilder $queryBuilder): void
+    {
+        if ($this->pagination !== null) {
+            $queryBuilder->distinct();
+
+            $queryBuilder->setMaxResults($this->getPaginationLimit());
+            $queryBuilder->setFirstResult($this->getPaginationOffset());
+        }
+    }
+
+    /**
+     * Calculates pagination total.
+     *
+     * @param QueryBuilder $queryBuilder
+     */
+    public function applyPaginationTotal(QueryBuilder $queryBuilder): void
     {
         if ($this->pagination !== null) {
             $queryBuilder->distinct();
@@ -76,9 +90,6 @@ trait PaginationTrait
             try {
                 $this->setPaginationTotal((int)$totalQueryBuilder->getQuery()->getSingleScalarResult());
             } catch (\Exception $e) {} //F.e. for TableNotFoundExceptions
-
-            $queryBuilder->setMaxResults($this->getPaginationLimit());
-            $queryBuilder->setFirstResult($this->getPaginationOffset());
         }
     }
 
